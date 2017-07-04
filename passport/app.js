@@ -8,31 +8,29 @@ const session = require('express-session');
 const passport = require('passport');
 const mongoose = require('mongoose');
 
-const index = require('./routes/index');
-const users = require('./routers/users');
-
-// Port
-const port = 3000;
-
-// Setup App
 const app = express();
 
-// Setup View
-app.engine('handlebars', exphbs({ defaultLayout: 'main' }));
+const port = 3000;
+
+const index = require('./routes/index');
+
+// View Engine
+app.engine('handlebars', exphbs({defaultLayout:'main'}));
 app.set('view engine', 'handlebars');
 
-// Setup Body Parser Middleware
+// Static Folder
+app.use(express.static(path.join(__dirname, 'public')));
+
+// Body Parser Middleware
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
 // Express Session
-app.use(
-  session({
+app.use(session({
     secret: 'secret',
     saveUninitialized: true,
     resave: true
-  })
-);
+}));
 
 // Express messages
 app.use(require('connect-flash')());
@@ -42,28 +40,26 @@ app.use((req, res, next) => {
 });
 
 // Express Validator
-app.use(
-  expressValidator({
-    errorFormatter: (param, msg, value) => {
-      let namespace = param.split('.'),
-        root = namespace.shift(),
-        formParam = root;
+app.use(expressValidator({
+  errorFormatter: (param, msg, value) => {
+      let namespace = param.split('.')
+      , root    = namespace.shift()
+      , formParam = root;
 
-      while (namespace.length) {
-        formParam += '[' + namespace.shift() + ']';
-      }
-      return {
-        param: formParam,
-        msg: msg,
-        value: value
-      };
+    while(namespace.length) {
+      formParam += '[' + namespace.shift() + ']';
     }
-  })
-);
+    return {
+      param : formParam,
+      msg   : msg,
+      value : value
+    };
+  }
+}));
 
 app.use('/', index);
-app.use('/users', users);
 
+// Start Server
 app.listen(port, () => {
-  console.log(`Server started on ${port}`);
+  console.log('Server started on port '+port);
 });
