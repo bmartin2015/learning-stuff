@@ -12,6 +12,12 @@
     "express": "~4.15.2",
     "morgan": "~1.8.1",
     "pug": "~2.0.0-beta11",
-    "serve-favicon": "~2.4.2"
+    "serve-favicon": "~2.4.2",
+    "express-messages": "*",
+    "express-session": "*",
+    "connect-flash": "*",
+    "express-validator": "*",
+    "node-couchdb": "*",
+    "node-uuid": "*"
   }
 }
