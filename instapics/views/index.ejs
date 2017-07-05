@@ -1,11 +1,7 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <title><%= title %></title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
-  </head>
-  <body>
+<% include ../views/partials/header %>
+  <div class="grid">
     <h1><%= title %></h1>
-    <p>Welcome to <%= title %></p>
-  </body>
-</html>
+    <p>Please login with Instagram</p>
+    <a href="/login" class="button">Login with Instagram</a>
+  </div>
+<% include ../views/partials/footer %>
