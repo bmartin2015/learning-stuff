@@ -14,6 +14,14 @@ app.use(express.static(path.join(__dirname, 'public')));
 // Body Parser
 app.use(bodyParser.json());
 
+// Allow requests from angular
+app.use((req, res, next) => {
+  res.setHeader('Access-Control-Allow-Origin', 'http://localhost:4200');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
+  res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
+  next();
+});
+
 // Routes
 app.get('/', (req, res) => {
   res.send('Please use /api/clients');
